@@ -1,5 +1,6 @@
 package com.example.elchen.user2;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -39,15 +40,17 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        final TextView editText = (TextView) findViewById(R.id.editText);
+        final TextView t1 = (TextView) findViewById(R.id.textView);
         Button b1 = (Button) findViewById(R.id.button);
+        Intent intent = new Intent (MainActivity.this, MyService.class);
+        startService(intent);
 
         mref = new Firebase("https://elchen-110.firebaseio.com/second");
         mref.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 String data = dataSnapshot.getValue(String.class);
-                editText.setText(data);
+                t1.setText(data);
                 Toast.makeText(getBaseContext(), data, Toast.LENGTH_LONG).show();
             }
 
@@ -57,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        /*
         b1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick (View v) {
@@ -65,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                 String edit = editText1.getText().toString();
                 mref.setValue(edit);
             }
-        });
+        }); */
     }
 
     @Override
